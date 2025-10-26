@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PluseAI - AI-студия нового поколения</title>
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --secondary-blue: #1d4ed8;
+            --accent-blue: #3b82f6;
+            --light-blue: #dbeafe;
+            --dark-blue: #1e3a8a;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            overflow-x: hidden;
+        }
+
+        /* Анимации */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Навигация */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Герой секция */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Секции */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--text-dark);
+        }
+
+        /* Карточки */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--light-blue);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .card p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Примеры промптов */
+        .prompt-examples {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .prompt-category {
+            margin-bottom: 2rem;
+        }
+
+        .prompt-category h4 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .prompt-item {
+            background: var(--light-blue);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        /* Форматы */
+        .formats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .format-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .format-item:hover {
+            border-color: var(--primary-blue);
+            transform: scale(1.05);
+        }
+
+        .format-ratio {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .format-desc {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        /* Анимированные элементы */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        /* Мобильная навигация */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section {
+                padding: 4rem 1rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .prompt-examples {
+                padding: 2rem 1rem;
+            }
+        }
+
+        /* Интерактивные элементы */
+        .interactive-demo {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: white;
+            padding: 3rem;
+            border-radius: 20px;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .demo-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-size: 1rem;
+        }
+
+        .demo-button {
+            background: white;
+            color: var(--primary-blue);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .demo-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Футер */
+        .footer {
+            background: var(--dark-blue);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="logo">PluseAI</a>
+            <ul class="nav-links">
+                <li><a href="#features">Возможности</a></li>
+                <li><a href="#prompts">Промпты</a></li>
+                <li><a href="#formats">Форматы</a></li>
+                <li><a href="#demo">Демо</a></li>
+                <li><a href="#start">Начать</a></li>
+            </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Герой секция -->
+    <section class="hero">
+        <div class="floating-elements">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+        <div class="hero-content">
+            <h1>PluseAI</h1>
+            <p>AI-студия нового поколения. Генерация изображений, интеллектуальный чат и мощные инструменты для творчества в одном Telegram боте.</p>
+            <a href="#start" class="cta-button">Начать создавать</a>
+        </div>
+    </section>
+
+    <!-- Возможности -->
+    <section class="section" id="features">
+        <h2 class="section-title">Что умеет PluseAI</h2>
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">🎨</div>
+                <h3>Текст → Изображение</h3>
+                <p>Превратите ваши идеи в уникальные изображения с помощью продвинутой генерации по текстовым описаниям.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">✨</div>
+                <h3>Стилизация фото</h3>
+                <p>Загрузите фото и преобразуйте его в любой стиль с сохранением ключевых элементов композиции.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🔄</div>
+                <h3>Слияние изображений</h3>
+                <p>Объединяйте до 3 изображений в одну гармоничную композицию с помощью AI.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">💬</div>
+                <h3>Умный чат</h3>
+                <p>Общайтесь с продвинутыми AI-моделями GPT-5, GPT-5 Nano и GPT-5 Mini для решения любых задач.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Примеры промптов -->
+    <section class="section" id="prompts">
+        <h2 class="section-title">Искусство промптов</h2>
+        <div class="prompt-examples">
+            <div class="prompt-category">
+                <h4>📝 Базовые промпты для изображений</h4>
+                <div class="prompt-item">"Футуристический город в стиле киберпанк, неоновые огни, дождь, ночное время"</div>
+                <div class="prompt-item">"Кот в костюме бизнесмена, работает за компьютером в современном офисе"</div>
+                <div class="prompt-item">"Волшебный лес с светящимися грибами, лунный свет, фантастическая атмосфера"</div>
+            </div>
+            
+            <div class="prompt-category">
+                <h4>🎨 Продвинутые техники</h4>
+                <div class="prompt-item">"Портрет женщины в стиле ар-нуво, золотые акценты, детализированные узоры, элегантность"</div>
+                <div class="prompt-item">"Космический пейзаж в стиле Ван Гога, swirling stars, яркие цвета, экспрессия"</div>
+                <div class="prompt-item">"Фотография продукта: современный смартфон на мраморной поверхности, профессиональное освещение, минимализм"</div>
+            </div>
+
+            <div class="prompt-category">
+                <h4>💬 Промпты для AI-чата</h4>
+                <div class="prompt-item">"Напиши бизнес-план для стартапа в сфере образовательных технологий"</div>
+                <div class="prompt-item">"Объясни квантовую физику простыми словами, как для 10-летнего ребенка"</div>
+                <div class="prompt-item">"Помоги написать креативное сопроводительное письмо для позиции UX-дизайнера"</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Форматы -->
+    <section class="section" id="formats">
+        <h2 class="section-title">Форматы изображений</h2>
+        <p style="text-align: center; color: var(--text-light); margin-bottom: 2rem;">10 профессиональных соотношений сторон для любых целей</p>
+        <div class="formats-grid">
+            <div class="format-item">
+                <div class="format-ratio">1:1</div>
+                <div class="format-desc">Квадрат<br>Instagram</div>
+            </div>
+            <div class="format-item">
+                <div class="format-ratio">3:2</div>
+                <div class="format-desc">Пейзаж<br>Фотография</div>
+            </div>
+            <div class="format-item">
+                <div class="format-ratio">2:3</div>
+                <div class="format-desc">Портрет<br>Постеры</div>
+            </div>
+            <div class="format-item">
+                <div class="format-ratio">4:3</div>
+                <div class="format-desc">Классика<br>Мониторы</div>
+            </div>
+            <div class="format-item">
+                <div class="format-ratio">16:9</div>
+                <div class="format-desc">Широкий<br>Кино</div>
+            </div>
+            <div class="format-item">
+                <div class="format-ratio">9:16</div>
+                <div class="format-desc">Вертикальный<br>Stories</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Интерактивное демо -->
+    <section class="section" id="demo">
+        <h2 class="section-title">Попробуйте сами</h2>
+        <div class="interactive-demo">
+            <h3 style="margin-bottom: 1rem;">Генератор идей для промптов</h3>
+            <p>Введите тему, и мы предложим креативные идеи для изображений</p>
+            <input type="text" class="demo-input" placeholder="Например: космос, животные, технологии..." id="promptInput">
+            <button class="demo-button" onclick="generatePromptIdeas()">Сгенерировать идеи</button>
+            <div id="promptResults" style="margin-top: 2rem; text-align: left;"></div>
+        </div>
+    </section>
+
+    <!-- Начало работы -->
+    <section class="section" id="start">
+        <h2 class="section-title">Начните прямо сейчас</h2>
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">🤖</div>
+                <h3>Найдите бота</h3>
+                <p>Откройте Telegram и найдите @PluseAI_bot</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🚀</div>
+                <h3>Начните диалог</h3>
+                <p>Нажмите /start и выберите нужный инструмент</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">💫</div>
+                <h3>Создавайте</h3>
+                <p>Используйте промпты и форматы для идеальных результатов</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <h3>PluseAI</h3>
+        <p>AI-студия нового поколения</p>
+        <p style="margin-top: 1rem; opacity: 0.8;">© 2024 PluseAI. Все права защищены.</p>
+    </footer>
+
+    <script>
+        // Мобильное меню
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                // Закрываем мобильное меню после клика
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+
+        // Генератор идей промптов
+        function generatePromptIdeas() {
+            const input = document.getElementById('promptInput').value.toLowerCase();
+            const results = document.getElementById('promptResults');
+            
+            if (!input) {
+                results.innerHTML = '<p>Пожалуйста, введите тему для генерации идей</p>';
+                return;
+            }
+
+            const promptIdeas = {
+                'космос': [
+                    "Туманность Ориона в стиле импрессионизма, яркие цвета, космическая пыль",
+                    "Астронавт, плавающий в космосе рядом с красной планетой, сюрреализм",
+                    "Галактика Андромеды, ультра-детализированная, научная иллюстрация"
+                ],
+                'животные': [
+                    "Лиса в зимнем лесу, снег, северное сияние, волшебная атмосфера",
+                    "Подводный мир с разноцветными рыбами и кораллами, фотореализм",
+                    "Сова с золотыми перьями, мистический лес, фэнтези"
+                ],
+                'технологии': [
+                    "Нейронные сети в виде светящихся линий в темном пространстве",
+                    "Робот-художник, рисующий картину в стиле ренессанс",
+                    "Киберпанк-город с летающими автомобилями и неоновой рекламой"
+                ],
+                'природа': [
+                    "Водопад в тропическом лесу, радуга, пышная растительность",
+                    "Горный пейзаж на рассвете, туман в долине, эпичный вид",
+                    "Сакура в полном цвету, лепестки на ветру, японский сад"
+                ],
+                'архитектура': [
+                    "Футуристический небоскреб из стекла и стали, ночной город",
+                    "Заброшенный замок в готическом стиле, лунный свет, таинственная атмосфера",
+                    "Минималистичный дом в скандинавском стиле, природа, уют"
+                ]
+            };
+
+            let ideas = [];
+            for (const [key, value] of Object.entries(promptIdeas)) {
+                if (input.includes(key)) {
+                    ideas = ideas.concat(value);
+                }
+            }
+
+            if (ideas.length === 0) {
+                // Общие идеи если тема не найдена
+                ideas = [
+                    `${input} в стиле поп-арт, яркие цвета, комикс`,
+                    `Макро фотография ${input}, детализированная, профессиональное освещение`,
+                    `${input} в фэнтези стиле, волшебство, эпичный масштаб`,
+                    `Абстрактная интерпретация ${input}, геометрические формы, современное искусство`
+                ];
+            }
+
+            // Показываем 3 случайные идеи
+            const selectedIdeas = ideas.sort(() => 0.5 - Math.random()).slice(0, 3);
+            
+            results.innerHTML = '<h4>Идеи для промптов:</h4>' + 
+                selectedIdeas.map(idea => `<div class="prompt-item">${idea}</div>`).join('');
+        }
+
+        // Анимация появления элементов при скролле
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Наблюдаем за карточками и секциями
+        document.querySelectorAll('.card, .section-title, .prompt-examples, .interactive-demo').forEach(el => {
+            el.style.opacity = '0';
+            observer.observe(el);
+        });
+
+        // Параллакс эффект для плавающих элементов
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const floatingElements = document.querySelectorAll('.floating-element');
+            
+            floatingElements.forEach((element, index) => {
+                const speed = 0.5 + (index * 0.1);
+                element.style.transform = `translateY(${scrolled * speed * 0.1}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
